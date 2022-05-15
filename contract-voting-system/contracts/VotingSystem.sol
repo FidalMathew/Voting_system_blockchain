@@ -1,8 +1,10 @@
-// SPDX-License-Identifier: GPL-3.0
+//SPDX-License-Identifier: Unlicense
 
-pragma solidity >=0.7.0 <0.9.0;
+pragma solidity ^0.8.0;
 
-contract VoteSystem {
+// import "../node_modules/hardhat/console.sol";
+
+contract VotingSystem {
     struct candidate {
         address candAddress;
         string name;
