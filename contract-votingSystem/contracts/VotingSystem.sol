@@ -28,25 +28,37 @@ contract VotingSystem {
         manager = msg.sender;
     }
 
-    function addVoters(address _voterAddress, string memory _voterName)
+    function isManager(address _ad) public view returns (bool) {
+        return (_ad == manager);
+    }
+
+    function addVoter(address _voterAddress, string memory _voterName)
         public
-        returns (voter[] memory)
+        returns (bool)
     {
         require(msg.sender == manager);
-        voterArr.push(voter(_voterAddress, _voterName, false));
 
-        return voterArr;
+        for (uint256 i = 0; i < voterArr.length; i++) {
+            require(_voterAddress != voterArr[i].voterAddress);
+        }
+
+        voterArr.push(voter(_voterAddress, _voterName, false));
+        return true;
     }
 
     function addCandidate(
         address _candAddress,
         string memory _candName,
         string memory _candProposal
-    ) public returns (candidate[] memory) {
+    ) public returns (bool) {
         require(msg.sender == manager);
-        candArr.push(candidate(_candAddress, _candName, _candProposal, 0));
 
-        return candArr;
+        for (uint256 i = 0; i < candArr.length; i++) {
+            require(_candAddress != candArr[i].candAddress);
+        }
+
+        candArr.push(candidate(_candAddress, _candName, _candProposal, 0));
+        return true;
     }
 
     function getCandidates() public view returns (candidate[] memory) {
