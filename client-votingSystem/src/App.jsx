@@ -16,7 +16,7 @@ function App() {
 
   const [isManager, setIsManager] = useState(false);
 
-  const contractAddress = "0xF7A7bD0647a02C6E28AC10A551AFD8BCcE320824"
+  const contractAddress = "0xCCb89d244C5f58f2a1B5DAFad289A03d434CF8F0"
   const contractABI = abi.abi;
   const { ethereum } = window;
 
@@ -107,7 +107,6 @@ function App() {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-    console.log("useEff")
   }, [currentAccount])
 
   return (

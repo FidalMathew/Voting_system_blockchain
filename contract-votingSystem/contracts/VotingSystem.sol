@@ -18,6 +18,14 @@ contract VotingSystem {
         bool voted; //default value is false
     }
 
+    event NewCandidate(
+        address indexed candAdd,
+        string name,
+        string proposal,
+        uint256 votes
+    );
+    event NewVoter(address indexed voterAdd, string name, bool voted);
+
     candidate[] public candArr;
     voter[] public voterArr;
 
@@ -32,10 +40,7 @@ contract VotingSystem {
         return (_ad == manager);
     }
 
-    function addVoter(address _voterAddress, string memory _voterName)
-        public
-        returns (bool)
-    {
+    function addVoter(address _voterAddress, string memory _voterName) public {
         require(msg.sender == manager);
 
         for (uint256 i = 0; i < voterArr.length; i++) {
@@ -43,14 +48,14 @@ contract VotingSystem {
         }
 
         voterArr.push(voter(_voterAddress, _voterName, false));
-        return true;
+        emit NewVoter(_voterAddress, _voterName, false);
     }
 
     function addCandidate(
         address _candAddress,
         string memory _candName,
         string memory _candProposal
-    ) public returns (bool) {
+    ) public {
         require(msg.sender == manager);
 
         for (uint256 i = 0; i < candArr.length; i++) {
@@ -58,7 +63,7 @@ contract VotingSystem {
         }
 
         candArr.push(candidate(_candAddress, _candName, _candProposal, 0));
-        return true;
+        emit NewCandidate(_candAddress, _candName, _candProposal, 0);
     }
 
     function getCandidates() public view returns (candidate[] memory) {
@@ -74,21 +79,33 @@ contract VotingSystem {
         require(msg.sender != manager);
 
         uint256 flag = 0;
-        voter memory votePerson;
+        uint256 pos = 0;
 
         for (uint256 i = 0; i < voterArr.length; i++) {
             if (msg.sender == voterArr[i].voterAddress) {
-                votePerson = voterArr[i];
+                pos = i;
                 flag = 1;
             }
         }
 
         require(flag == 1);
-        require(!votePerson.voted);
+        require(!voterArr[pos].voted);
 
         for (uint256 i = 0; i < candArr.length; i++) {
             if (_candAddress == candArr[i].candAddress) {
                 candArr[i].votes = candArr[i].votes + 1;
+                voterArr[pos].voted = true;
+                emit NewCandidate(
+                    _candAddress,
+                    candArr[i].name,
+                    candArr[i].proposal,
+                    candArr[i].votes
+                );
+                emit NewVoter(
+                    voterArr[i].voterAddress,
+                    voterArr[i].name,
+                    voterArr[i].voted
+                );
             }
         }
     }

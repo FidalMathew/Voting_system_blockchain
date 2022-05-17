@@ -16,10 +16,11 @@ function Admin({ contract }) {
     const votingSystem = async () => {
 
         const Cand = await contract.getCandidates();
-        console.log(Cand);
+
         setCandidates(Cand)
 
         const Vot = await contract.getVoters();
+        setVoters(Vot)
     }
 
 
@@ -39,7 +40,52 @@ function Admin({ contract }) {
 
     useEffect(() => {
         votingSystem();
-    }, [])
+    })
+
+
+    useEffect(() => {
+
+        const onNewCandidate = (candAddress, name, proposal, votes) => {
+            console.log("NewCandidate", candAddress, name, proposal, votes);
+            setCandidates(prevState => [
+                ...prevState,
+                {
+                    candAddress, name, proposal, votes
+                },
+            ]);
+        };
+
+        const onNewVoter = (voterAddress, name, voted) => {
+            console.log("NewVoter", voterAddress, name, voted);
+            setVoters(prevState => [
+                ...prevState,
+                {
+                    voterAddress, name, voted
+                },
+            ]);
+        };
+
+        if (window.ethereum) {
+            contract.on("NewCandidate", onNewCandidate);
+            contract.on("NewVoter", onNewVoter);
+
+        }
+
+        return () => {
+            if (contract) {
+                contract.off("NewCandidate", onNewCandidate);
+                contract.off("NewVoter", onNewVoter);
+            }
+        };
+    }, [contract]);
+
+
+    const startVoting = () => {
+
+    }
+    const endVoting = () => {
+
+    }
 
 
     return (
@@ -57,8 +103,10 @@ function Admin({ contract }) {
                         <br />
                         {
                             voters.map((val) => {
-                                console.log(val);
-                                return <></>
+                                return (
+                                    <div key={val.voterAddress}>
+                                        {val.voterAddress}  {val.name}  {`${val.voted}`}
+                                    </div>)
                             })
                         }
                     </div>
@@ -85,7 +133,10 @@ function Admin({ contract }) {
 
                     </div>
                 </div>
-
+                <div>
+                    <button className='btn btn-primary m-3 mt-5' onClick={startVoting}> Start Voting </button>
+                    <button className='btn btn-danger m-3 mt-5' onClick={endVoting}> End Voting </button>
+                </div>
             </div>
         </>
     )
