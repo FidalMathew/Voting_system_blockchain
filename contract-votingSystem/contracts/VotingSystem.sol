@@ -115,10 +115,21 @@ contract VotingSystem {
         votingAllowed = true;
     }
 
-    function endVoting() public returns (candidate memory) {
-        require(msg.sender == manager);
-        votingAllowed = false;
+    function votingStatus() public view returns (bool voteAllow) {
+        return votingAllowed;
+    }
 
+    function candWinner()
+        public
+        view
+        returns (
+            address _candAddress,
+            string memory _name,
+            string memory _proposal,
+            uint256 _votes
+        )
+    {
+        require(!votingAllowed);
         uint256 maxVotes = 0;
         uint256 pos = 0;
 
@@ -128,6 +139,16 @@ contract VotingSystem {
             }
         }
 
-        return candArr[pos];
+        return (
+            candArr[pos].candAddress,
+            candArr[pos].name,
+            candArr[pos].proposal,
+            candArr[pos].votes
+        );
+    }
+
+    function endVoting() public {
+        require(msg.sender == manager);
+        votingAllowed = false;
     }
 }

@@ -16,7 +16,7 @@ function App() {
 
   const [isManager, setIsManager] = useState(false);
 
-  const contractAddress = "0xCCb89d244C5f58f2a1B5DAFad289A03d434CF8F0"
+  const contractAddress = "0x81466b87db90B679897BA62786c9367E06efCC87"
   const contractABI = abi.abi;
   const { ethereum } = window;
 
@@ -116,8 +116,10 @@ function App() {
 
       <button onClick={connectWallet}>Connect Wallet</button>
       <h4 className='mt-2'>{currentAccount}</h4>
-      {
+      {currentAccount ? (
+
         isManager ? <Admin contract={votingSystemContract} /> : <Voter contract={votingSystemContract} />
+      ) : ""
       }
 
     </div>

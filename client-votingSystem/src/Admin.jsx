@@ -13,15 +13,7 @@ function Admin({ contract }) {
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
 
-    const votingSystem = async () => {
 
-        const Cand = await contract.getCandidates();
-
-        setCandidates(Cand)
-
-        const Vot = await contract.getVoters();
-        setVoters(Vot)
-    }
 
 
     const addVoter = async () => {
@@ -39,9 +31,18 @@ function Admin({ contract }) {
     }
 
     useEffect(() => {
-        votingSystem();
-    })
+        const votingSystem = async () => {
 
+            const Cand = await contract.getCandidates();
+            console.log(Cand)
+            setCandidates(Cand)
+
+            const Vot = await contract.getVoters();
+            setVoters(Vot)
+        }
+
+        votingSystem();
+    }, [])
 
     useEffect(() => {
 
@@ -80,11 +81,19 @@ function Admin({ contract }) {
     }, [contract]);
 
 
-    const startVoting = () => {
-
+    const startVoting = async () => {
+        await contract.startVoting();
     }
-    const endVoting = () => {
+    const endVoting = async () => {
 
+        await contract.endVoting();
+        getWinner();
+    }
+
+    const getWinner = async () => {
+        const winner = await contract.candWinner();
+        console.log(winner);
+        alert(`${winner._name} is the winner by ${parseInt(winner._votes._hex)} votes!`)
     }
 
 
@@ -136,6 +145,10 @@ function Admin({ contract }) {
                 <div>
                     <button className='btn btn-primary m-3 mt-5' onClick={startVoting}> Start Voting </button>
                     <button className='btn btn-danger m-3 mt-5' onClick={endVoting}> End Voting </button>
+
+                    <div>
+                        <button onClick={getWinner} >Get Winner</button>
+                    </div>
                 </div>
             </div>
         </>
