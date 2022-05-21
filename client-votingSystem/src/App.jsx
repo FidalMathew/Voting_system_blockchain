@@ -7,11 +7,9 @@ import Admin from './Admin';
 import Voter from './Voter';
 
 function App() {
+  const [chainId, setChainId] = useState("")
 
   const [currentAccount, setCurrentAccount] = useState("")
-
-  // const [candidateArr, setCandidateArr] = useState([])
-  // const [voterArr, setVoterArr] = useState([])
   const [votingSystemContract, setVotingSystemContract] = useState("");
 
   const [isManager, setIsManager] = useState(false);
@@ -45,7 +43,20 @@ function App() {
 
       }
       else {
+        setCurrentAccount("")
         console.log("No authorized accounts found!");
+      }
+
+
+      const curr_chainId = await ethereum.request({ method: 'eth_chainId' });
+      setChainId(curr_chainId)
+
+      ethereum.on('chainChanged', handleChainChanged);
+
+
+      // Reload the page when they change networks
+      function handleChainChanged(_chainId) {
+        window.location.reload();
       }
 
     } catch (error) {
@@ -65,6 +76,8 @@ function App() {
       const accounts = await ethereum.request({ method: "eth_requestAccounts" }); // request connection with accounts
       // console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
+      // const chainId = await ethereum.request({ method: 'eth_chainId' });
+
     }
     catch (e) {
       console.log(e);
@@ -102,7 +115,36 @@ function App() {
     }
   }
 
+  const switchNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
+      });
 
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+  useEffect(() => {
+
+    if (ethereum) {
+      ethereum.on("accountsChanged", (account) => {
+
+        setCurrentAccount(account);
+      })
+
+    }
+    else
+      console.log("No metamask!");
+
+    return () => {
+      // ethereum.removeListener('accountsChanged');
+
+    }
+  }, [])
 
 
   useEffect(() => {
@@ -116,7 +158,13 @@ function App() {
 
       <button onClick={connectWallet}>Connect Wallet</button>
       <h4 className='mt-2'>{currentAccount}</h4>
-      {currentAccount ? (
+      {
+        currentAccount && (chainId !== '0x5') &&
+        (<>
+          <button className='btn btn-primary' onClick={switchNetwork}> Switch Network</button>
+        </>)
+      }
+      {currentAccount && (chainId === '0x5') ? (
 
         isManager ? <Admin contract={votingSystemContract} /> : <Voter contract={votingSystemContract} />
       ) : ""
