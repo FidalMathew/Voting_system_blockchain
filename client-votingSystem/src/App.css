@@ -31,9 +31,27 @@
   color: #2b0f75;
 }
 .bttn_ui:hover {
-background: transparent;
-border: 2px solid white;
-padding: 6px 23px 6px 23px;
+  background-image: linear-gradient(#e730f8, #fb79f4 );
+  background-image: linear-gradient(#fff3fe, #c6aeff);
 
-color: white;
+}
+
+input{
+  width: 60%;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 5px;
+  
+}
+input:focus{
+  outline: none;
+}
+
+.systemUser{
+  width: 70%;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  background-color: white;
+  color: #2b0f75;
 }
