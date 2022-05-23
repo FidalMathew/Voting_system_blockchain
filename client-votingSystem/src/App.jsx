@@ -165,7 +165,7 @@ function App() {
 
       {currentAccount && (chainId === '0x5') ? (
 
-        isManager ? <Admin contract={votingSystemContract} /> : <Voter contract={votingSystemContract} />
+        isManager ? <Admin contract={votingSystemContract} /> : <Voter contract={votingSystemContract} user={currentAccount} />
       ) : (
         <>
           <div className='home_content'>

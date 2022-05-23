@@ -8,6 +8,22 @@
   align-items: center;
 
 }
+
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10%;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgb(99, 5, 117);
+}
+
+
 .head_navbar{
   background-color: #FBFBFB;
   width: 90%;
@@ -31,7 +47,6 @@
   color: #2b0f75;
 }
 .bttn_ui:hover {
-  background-image: linear-gradient(#e730f8, #fb79f4 );
   background-image: linear-gradient(#fff3fe, #c6aeff);
 
 }
@@ -54,4 +69,22 @@ input:focus{
   margin-bottom: 15px;
   background-color: white;
   color: #2b0f75;
+  transition-duration: .5s;
+}
+
+.hidden{
+  display: none;
+}
+
+.systemUser:hover{
+  transform: scale(1.1);
+  z-index: 10;
+}
+.systemUser:hover .hidden{
+  display: block;
+
+}
+
+.candData{
+  background-color: white;
 }
