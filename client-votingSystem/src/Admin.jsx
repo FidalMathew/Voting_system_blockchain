@@ -111,6 +111,7 @@ function Admin({ contract }) {
         try {
             await contract.resetVoters();
             alert("Voters reset!")
+            setVoters([]);
         } catch (error) {
             console.log(error)
         }
@@ -121,6 +122,7 @@ function Admin({ contract }) {
         try {
             await contract.resetCandidates();
             alert("Candidates reset!")
+            setCandidates([])
         } catch (error) {
             console.log(error)
         }
