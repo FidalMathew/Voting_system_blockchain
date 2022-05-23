@@ -151,4 +151,14 @@ contract VotingSystem {
         require(msg.sender == manager);
         votingAllowed = false;
     }
+
+    function resetVoters() public {
+        require(msg.sender == manager);
+        delete voterArr;
+    }
+
+    function resetCandidates() public {
+        require(msg.sender == manager);
+        delete candArr;
+    }
 }

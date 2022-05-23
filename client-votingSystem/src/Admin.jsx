@@ -107,6 +107,26 @@ function Admin({ contract }) {
         alert(`${winner._name} is the winner by ${parseInt(winner._votes._hex)} votes!`)
     }
 
+    const resetVoters = async () => {
+        try {
+            await contract.resetVoters();
+            alert("Voters reset!")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const resetCandidates = async () => {
+        try {
+            await contract.resetCandidates();
+            alert("Candidates reset!")
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
     return (
         <>
             <div className='container-fluid mt-5'>
@@ -188,7 +208,10 @@ function Admin({ contract }) {
                         <button className='m-3 mt-5 bttn_ui' style={{ background: `${systemStatus ? "#ff6060" : "#b2b2b2"}`, pointerEvents: `${!systemStatus ? "none" : ""}` }} onClick={endVoting}> End Voting </button>
 
                         <div>
-                            <button className='bttn_ui' style={{ background: "rgb(96 230 255)" }} onClick={getWinner} >Get Winner</button>
+                            <button className='bttn_ui me-2 ms-2' style={{ background: "#60e6ff" }} onClick={getWinner} >Get Winner</button>
+                            <button className='bttn_ui me-2 ms-2' style={{ background: "#ecff8a" }} onClick={resetVoters} >Reset Voters</button>
+                            <button className='bttn_ui me-2 ms-2' style={{ background: "#ffc160" }} onClick={resetCandidates} >Reset Candidates</button>
+
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ function App() {
 
   const [isManager, setIsManager] = useState(false);
 
-  const contractAddress = "0x81466b87db90B679897BA62786c9367E06efCC87"
+  const contractAddress = "0xe3fc547ba753f2Ce611cf3CD6b8C5861911aE44c"
   const contractABI = abi.abi;
   const { ethereum } = window;
 
