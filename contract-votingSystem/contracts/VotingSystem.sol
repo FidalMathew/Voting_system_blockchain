@@ -95,17 +95,6 @@ contract VotingSystem {
             if (_candAddress == candArr[i].candAddress) {
                 candArr[i].votes = candArr[i].votes + 1;
                 voterArr[pos].voted = true;
-                emit NewCandidate(
-                    _candAddress,
-                    candArr[i].name,
-                    candArr[i].proposal,
-                    candArr[i].votes
-                );
-                emit NewVoter(
-                    voterArr[i].voterAddress,
-                    voterArr[i].name,
-                    voterArr[i].voted
-                );
             }
         }
     }

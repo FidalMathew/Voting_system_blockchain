@@ -39,16 +39,28 @@ function Voter({ contract, user }) {
         const checkVoter = () => {
 
             let flag = 0;
-            for (let i = 0; i < voters.length; i++)
-
-                if (user === voters[i].voterAddress) {
+            let pos = -1;
+            for (let i = 0; i < voters.length; i++) {
+                let val = voters[i].voterAddress.toLowerCase()
+                // console.log(user, " --- ", val)
+                if (user.localeCompare(val) === 0) {
+                    // console.log("Yess")
                     flag = 1;
+                    pos = i;
                     break;
                 }
-            if (flag === 0)
-                setHeader("Invalid Voter! No Voting Access");
 
-            else if (flag && !user.voted) {
+            }
+            console.log(flag)
+
+            if (flag === 0) {
+                // console.log("dsas")
+                setHeader("Invalid Voter! No Voting Access");
+            }
+
+            else if (flag && !voters[pos].voted) {
+                // console.log("pass")
+                setHeader("")
                 setAuth(true);
             }
             else
@@ -69,6 +81,8 @@ function Voter({ contract, user }) {
         // console.log(_candAddress, " ", contract);
         try {
             await contract.voteCandidate(_candAddress);
+            setHeader("Voter already Voted! Kindly wait for the results")
+
         } catch (error) {
             alert("Invalid Voter")
         }

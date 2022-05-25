@@ -16,59 +16,31 @@ function App() {
 
   const [isManager, setIsManager] = useState(false);
 
-  const contractAddress = "0xe3fc547ba753f2Ce611cf3CD6b8C5861911aE44c"
+  const contractAddress = "0x643dA4110004C79F384f214396a7288D350FfFFa"
   const contractABI = abi.abi;
   const { ethereum } = window;
 
+  useEffect(() => {
 
+    const getContract = () => {
 
+      const provider = new ethers.providers.Web3Provider(ethereum);
+      const signer = provider.getSigner();
+      const votSysContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-  const connectWallet = async () => {
-    try {
-
-      if (!ethereum) {
-        alert("Get MetaMask!");
-        return;
-      }
-
-      const accounts = await ethereum.request({ method: "eth_requestAccounts" }); // request connection with accounts
-      // console.log("Connected", accounts[0]);
-      setCurrentAccount(accounts[0]);
-      // const chainId = await ethereum.request({ method: 'eth_chainId' });
-
+      setVotingSystemContract(votSysContract);
     }
-    catch (e) {
-      console.log(e);
-    }
-  }
-
-
-
-
-
-
-
-
-
-  const switchNetwork = async () => {
-    try {
-      await window.ethereum.request({
-        method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
-      });
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    if (ethereum)
+      getContract();
+  }, [ethereum, contractABI])
 
 
   useEffect(() => {
 
     if (ethereum) {
-      ethereum.on("accountsChanged", (account) => {
+      ethereum.on("accountsChanged", (accounts) => {
 
-        setCurrentAccount(account);
+        setCurrentAccount(accounts[0]);
       })
 
     }
@@ -82,20 +54,15 @@ function App() {
   }, [ethereum])
 
 
+
   useEffect(() => {
 
     const checkIfManager = async () => {
       try {
 
-        if (ethereum) {
+        if (window.ethereum && votingSystemContract) {
 
-          const provider = new ethers.providers.Web3Provider(ethereum);
-          const signer = provider.getSigner();
-          const votSysContract = new ethers.Contract(contractAddress, contractABI, signer);
-
-          setVotingSystemContract(votSysContract);  // set contract data here
-
-          let val = await votSysContract.isManager(currentAccount);
+          let val = await votingSystemContract.isManager(currentAccount);
           setIsManager(val);
 
         }
@@ -108,7 +75,14 @@ function App() {
       }
     }
 
+    if (currentAccount)
+      checkIfManager();
 
+
+  }, [votingSystemContract, currentAccount])
+
+
+  useEffect(() => {
     const checkIfWalletIsConnected = async () => {
 
       try {
@@ -128,7 +102,6 @@ function App() {
           // if (currentAccount !== "")
           setCurrentAccount(account)
 
-          checkIfManager();
           // votingSystem();
 
         }
@@ -154,10 +127,51 @@ function App() {
       }
     }
 
-
-
     checkIfWalletIsConnected();
   }, [currentAccount, contractABI, ethereum])
+
+
+
+  const connectWallet = async () => {
+    try {
+
+      if (!ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+
+      const accounts = await ethereum.request({ method: "eth_requestAccounts" }); // request connection with accounts
+      // console.log("Connected", accounts[0]);
+      setCurrentAccount(accounts[0]);
+      // const chainId = await ethereum.request({ method: 'eth_chainId' });
+
+    }
+    catch (e) {
+      console.log(e);
+    }
+  }
+
+
+  const switchNetwork = async () => {
+    try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+
+
+
+
+
+
 
   return (
     <div className="App">
