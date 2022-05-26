@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
+
 
 function Admin({ contract }) {
 
@@ -214,6 +216,11 @@ function Admin({ contract }) {
                             <button className='bttn_ui me-2 ms-2' style={{ background: "#ecff8a" }} onClick={resetVoters} >Reset Voters</button>
                             <button className='bttn_ui me-2 ms-2' style={{ background: "#ffc160" }} onClick={resetCandidates} >Reset Candidates</button>
 
+                        </div>
+                        <div>
+                            {/* <Navbar user={currentAccount} /> */}
+
+                            <Link to="/nft">Send NFT</Link>
                         </div>
                     </div>
                 </div>
