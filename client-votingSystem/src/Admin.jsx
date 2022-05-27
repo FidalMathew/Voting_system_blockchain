@@ -223,14 +223,13 @@ function Admin() {
 
                         <div>
                             <button className='bttn_ui me-2 ms-2' style={{ background: "#60e6ff" }} onClick={getWinner} >Get Winner</button>
+                            <button className='bttn_ui' style={{ background: "#ff7857" }}> <Link to="/nft" style={{ color: "#072a5e", textDecoration: "none" }}>Send NFT</Link> </button>
                             <button className='bttn_ui me-2 ms-2' style={{ background: "#ecff8a" }} onClick={resetVoters} >Reset Voters</button>
                             <button className='bttn_ui me-2 ms-2' style={{ background: "#ffc160" }} onClick={resetCandidates} >Reset Candidates</button>
 
                         </div>
                         <div>
-                            {/* <Navbar user={currentAccount} /> */}
 
-                            <Link to="/nft">Send NFT</Link>
                         </div>
                     </div>
                 </div>
