@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useContext } from "react";
+import AllNfts from './components/AllNfts';
+import WinnerTemp from './components/WinnerTemp';
 import { VoterContext } from "./Context/Context";
 
 function Voter() {
 
-    const { currentAccount, votingSystemContract } = useContext(VoterContext)
+    const { currentAccount, votingSystemContract, setWinner } = useContext(VoterContext)
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
 
@@ -76,9 +78,15 @@ function Voter() {
 
 
     const getWinner = async () => {
-        const winner = await votingSystemContract.candWinner();
-        // console.log(winner);
-        alert(`${winner._name} is the winner by ${parseInt(winner._votes._hex)} votes!`)
+        const winT = await votingSystemContract.candWinner();
+        // console.log(winT);
+        if (parseInt(winT._votes._hex) === 0) {
+            alert("No Winner! Highest Votes: 0")
+            return;
+        }
+        console.log(winT);
+        alert(`${winT._name} is the winT by ${parseInt(winT._votes._hex)} votes!`)
+        setWinner({ address: winT._candAddress, name: winT._name, proposal: winT._proposal, votes: parseInt(winT._votes._hex) })
     }
 
     const voteCandidate = async (_candAddress) => {
@@ -122,6 +130,8 @@ function Voter() {
         <div style={{ color: "tomato" }}>
             {header}
         </div>
+        <WinnerTemp />
+        <AllNfts />
     </div>
     )
 }

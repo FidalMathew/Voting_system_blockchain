@@ -14,8 +14,10 @@ export const VoterProvider = ({ children }) => {
 
     const [isManager, setIsManager] = useState(false);
     const [errorPage, setErrorPage] = useState(false)
+    const [tokenID, setTokenID] = useState(-1)
+    const [winner, setWinner] = useState({ address: "", name: "", proposal: "", votes: 0 })
 
-    const contractAddress = "0xAF9aA2b8551e2523AA6670cd8743Aeff2F291c94"
+    const contractAddress = "0xdCc734f78dB07D919812c53C00b9b816fB064b76"
     const contractABI = abi.abi;
     const { ethereum } = window;
 
@@ -53,8 +55,28 @@ export const VoterProvider = ({ children }) => {
             }
         }
 
-        if (currentAccount)
+
+        const setTokenID_Function = async () => {
+
+            try {
+
+                if (window.ethereum && currentAccount && votingSystemContract && chainId === '0x13881') {
+
+                    let val = await votingSystemContract.getTokenId();
+                    console.log(val)
+                    setTokenID(parseInt(val._hex) - 1);
+                }
+
+            } catch (error) {
+                console.log(error);
+            }
+        }
+
+
+        if (currentAccount) {
             checkIfManager();
+            setTokenID_Function()
+        }
 
 
     }, [votingSystemContract, currentAccount, chainId])
@@ -182,7 +204,8 @@ export const VoterProvider = ({ children }) => {
     return (
         <VoterContext.Provider
             value={{
-                chainId, currentAccount, votingSystemContract, isManager, errorPage, switchNetwork, connectWallet
+                chainId, currentAccount, votingSystemContract, isManager, errorPage, switchNetwork, connectWallet,
+                tokenID, setTokenID, winner, setWinner, contractAddress
             }}
         >
             {children}

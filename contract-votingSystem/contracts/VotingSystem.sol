@@ -160,7 +160,6 @@ contract VotingSystem is ERC721URIStorage {
 
     function makeAnEpicNFT(string memory tokenUri, address _recieverAdd)
         public
-        returns (uint256 id)
     {
         uint256 newItemId = _tokenIds.current();
         _safeMint(_recieverAdd, newItemId);
@@ -168,7 +167,11 @@ contract VotingSystem is ERC721URIStorage {
         _setTokenURI(newItemId, tokenUri);
 
         _tokenIds.increment();
+    }
 
-        return newItemId;
+    function getTokenId() public view returns (uint256 Id) {
+        uint256 newId = _tokenIds.current();
+        console.log(newId);
+        return newId;
     }
 }

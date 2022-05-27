@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { VoterContext } from "./Context/Context";
 
 function Admin() {
-    const { votingSystemContract } = useContext(VoterContext)
+    const { votingSystemContract, setWinner } = useContext(VoterContext)
 
     let contract = votingSystemContract
 
@@ -108,9 +108,15 @@ function Admin() {
     }
 
     const getWinner = async () => {
-        const winner = await contract.candWinner();
-        // console.log(winner);
-        alert(`${winner._name} is the winner by ${parseInt(winner._votes._hex)} votes!`)
+        const winT = await contract.candWinner();
+        // console.log(winT);
+        if (parseInt(winT._votes._hex) === 0) {
+            alert("No Winner! Highest Votes: 0")
+            return;
+        }
+        console.log(winT);
+        alert(`${winT._name} is the winT by ${parseInt(winT._votes._hex)} votes!`)
+        setWinner({ address: winT._candAddress, name: winT._name, proposal: winT._proposal, votes: parseInt(winT._votes._hex) })
     }
 
     const resetVoters = async () => {
