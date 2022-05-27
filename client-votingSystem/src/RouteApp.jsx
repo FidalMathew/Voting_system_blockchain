@@ -7,20 +7,30 @@ import Admin from "./Admin";
 import App from "./App";
 import SendNft from "./SendNft"
 import Voter from "./Voter";
-
-
+import { useContext } from "react";
+import { VoterContext } from "./Context/Context";
+import Home from "./Home";
+import './App.css';
+import Navbar from './components/Navbar';
+import Error from "./Error";
 
 function RouteApp() {
+
+    const { currentAccount, isManager, errorPage } = useContext(VoterContext)
+
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route exact path="/" element={<App />} />
-                <Route exact path="/admin" element={<Admin />} />
-                <Route exact path="/voter" element={<Voter />} />
-                <Route path="/nft" element={<SendNft />} />
-                {/* Add a 404 page  */}
-            </Routes>
-        </BrowserRouter>
+        <div className="App">
+            <Navbar user={currentAccount} />
+            <BrowserRouter>
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route exact path="/system" element={(errorPage) ? <Home /> : <App />} />
+                    <Route path="/nft" element={(!errorPage && isManager) ? <SendNft /> : <Home />} />
+                    <Route path="*" element={<Error />} />
+
+                </Routes>
+            </BrowserRouter>
+        </div>
     )
 }
 

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react'
+import { useContext } from "react";
+import { VoterContext } from "./Context/Context";
+import { useNavigate } from "react-router-dom"
 
+function Voter() {
 
-function Voter({ contract, user }) {
-
+    const { currentAccount, votingSystemContract, chainId } = useContext(VoterContext)
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
 
@@ -10,12 +13,21 @@ function Voter({ contract, user }) {
     const [header, setHeader] = useState("");
 
 
+    // const navigate = useNavigate();
+    // useEffect(() => {
+    //     if (!currentAccount || chainId !== '0x5') {
+    //         navigate("/")
+    //     }
+
+    // }, [currentAccount, navigate])
+
+
     useEffect(() => {
         const votingSystem = async () => {
 
             try {
 
-                const Cand = await contract.getCandidates();
+                const Cand = await votingSystemContract.getCandidates();
                 setCandidates(Cand)
 
             } catch (error) {
@@ -24,15 +36,18 @@ function Voter({ contract, user }) {
 
             try {
 
-                const Vot = await contract.getVoters();
+                const Vot = await votingSystemContract.getVoters();
                 setVoters(Vot)
 
             } catch (error) {
                 console.log(error)
             }
         }
-        votingSystem();
-    }, [contract])
+        if (votingSystemContract)
+            votingSystem();
+
+
+    }, [votingSystemContract])
 
     useEffect(() => {
 
@@ -42,8 +57,8 @@ function Voter({ contract, user }) {
             let pos = -1;
             for (let i = 0; i < voters.length; i++) {
                 let val = voters[i].voterAddress.toLowerCase()
-                // console.log(user, " --- ", val)
-                if (user.localeCompare(val) === 0) {
+                // console.log(currentAccount, " --- ", val)
+                if (currentAccount && currentAccount.localeCompare(val) === 0) {
                     // console.log("Yess")
                     flag = 1;
                     pos = i;
@@ -51,7 +66,6 @@ function Voter({ contract, user }) {
                 }
 
             }
-            console.log(flag)
 
             if (flag === 0) {
                 // console.log("dsas")
@@ -68,19 +82,19 @@ function Voter({ contract, user }) {
         }
         checkVoter();
 
-    }, [user, voters])
+    }, [currentAccount, voters])
 
 
     const getWinner = async () => {
-        const winner = await contract.candWinner();
+        const winner = await votingSystemContract.candWinner();
         // console.log(winner);
         alert(`${winner._name} is the winner by ${parseInt(winner._votes._hex)} votes!`)
     }
 
     const voteCandidate = async (_candAddress) => {
-        // console.log(_candAddress, " ", contract);
+        // console.log(_candAddress, " ", votingSystemContract);
         try {
-            await contract.voteCandidate(_candAddress);
+            await votingSystemContract.voteCandidate(_candAddress);
             setHeader("Voter already Voted! Kindly wait for the results")
 
         } catch (error) {

@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 
-// const pinata_api_key = process.env.REACT_APP_PINATA_API_KEY
-// const pinata_secret_api_key = process.env.REACT_APP_PINATA_API_SECRET
 
 function SendNft() {
 
@@ -10,14 +9,6 @@ function SendNft() {
     const [name, setName] = useState("")
     const [desc, setDesc] = useState("")
     const [jsonIPFS, setJsonIPFS] = useState("")
-    useEffect(() => {
-
-        const print = () => {
-            console.log(fileImg);
-        }
-
-        print()
-    }, [fileImg])
 
     const sendFileToIPFS = async (e) => {
 
@@ -76,17 +67,20 @@ function SendNft() {
     }
 
     return (
-        <div className='App text-center'>
+        <div className='mt-5 text-center'>
             <h2 className='text-white mb-5'>Send NFT</h2>
             <form onSubmit={sendFileToIPFS}>
-                <label for="files" class="btn" style={{ color: "white", marginLeft: "100px" }}>Select Image</label>
+                <label htmlFor="files" className="btn" style={{ color: "white", marginLeft: "100px" }}>Select Image</label>
                 <input id="files" type="file" onChange={(e) => setFileImg(e.target.files[0])} required placeholder='image' />
                 <input type="text" onChange={(e) => setName(e.target.value)} placeholder='name' required />
                 <input type="text" onChange={(e) => setDesc(e.target.value)} placeholder="desc" />
                 <br />
-                <button className='bttn_ui' type='submit' >Mint NFT</button>
+                <button className='bttn_ui me-3' type='submit' >Mint NFT</button>
+                <Link to="/system" style={{ textDecoration: "none" }}> <button className='bttn_ui mt-3' style={{ background: "#60e6ff", }}> Go to Admin Panal</button></Link>
+
             </form>
             <div className='text-white mt-2'> The NFT will be sent to the winner </div>
+
             <div>{jsonIPFS}</div>
         </div>
     )

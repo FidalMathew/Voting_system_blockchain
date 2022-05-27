@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { VoterContext } from "./Context/Context";
+import { useNavigate } from "react-router-dom"
 
+function Admin() {
+    const { currentAccount, votingSystemContract, chainId } = useContext(VoterContext)
 
-function Admin({ contract }) {
+    let contract = votingSystemContract
 
     const [V_walletAdd, setV_walletAdd] = useState("")
     const [V_name, setV_name] = useState("")
@@ -10,12 +15,18 @@ function Admin({ contract }) {
     const [C_name, setC_name] = useState("")
     const [C_proposal, setC_proposal] = useState("")
 
-
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
-
-
     const [systemStatus, setSystemStatus] = useState(false)
+
+    // const navigate = useNavigate();
+
+    // useEffect(() => {
+    //     if (!currentAccount || chainId !== '0x5') {
+    //         navigate("/")
+    //     }
+
+    // }, [currentAccount, navigate])
 
     const changeSystemStatus = () => {
         setSystemStatus(!systemStatus);
@@ -35,6 +46,9 @@ function Admin({ contract }) {
         setC_name("");
         setC_proposal("");
     }
+
+
+
 
     useEffect(() => {
         const votingSystem = async () => {
