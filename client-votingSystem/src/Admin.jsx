@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { VoterContext } from "./Context/Context";
-import { useNavigate } from "react-router-dom"
 
 function Admin() {
-    const { currentAccount, votingSystemContract, chainId } = useContext(VoterContext)
+    const { votingSystemContract } = useContext(VoterContext)
 
     let contract = votingSystemContract
 
@@ -18,15 +17,6 @@ function Admin() {
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
     const [systemStatus, setSystemStatus] = useState(false)
-
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     if (!currentAccount || chainId !== '0x5') {
-    //         navigate("/")
-    //     }
-
-    // }, [currentAccount, navigate])
 
     const changeSystemStatus = () => {
         setSystemStatus(!systemStatus);

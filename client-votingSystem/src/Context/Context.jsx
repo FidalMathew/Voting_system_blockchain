@@ -39,7 +39,7 @@ export const VoterProvider = ({ children }) => {
         const checkIfManager = async () => {
             try {
 
-                if (window.ethereum && votingSystemContract && currentAccount && chainId == '0x5') {
+                if (window.ethereum && votingSystemContract && currentAccount && chainId === '0x5') {
 
                     let val = await votingSystemContract.isManager(currentAccount);
                     setIsManager(val);

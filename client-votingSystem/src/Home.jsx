@@ -2,7 +2,6 @@ import { useContext, useEffect } from "react";
 import { VoterContext } from "./Context/Context";
 import ethImg from './utils/eth.gif'
 import './App.css';
-import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom"
 
 function Home() {
@@ -15,7 +14,7 @@ function Home() {
             navigate("/system")
         }
 
-    }, [currentAccount, navigate])
+    }, [currentAccount, navigate, chainId])
 
 
     return (

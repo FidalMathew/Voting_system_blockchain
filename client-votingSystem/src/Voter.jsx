@@ -1,25 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { useContext } from "react";
 import { VoterContext } from "./Context/Context";
-import { useNavigate } from "react-router-dom"
 
 function Voter() {
 
-    const { currentAccount, votingSystemContract, chainId } = useContext(VoterContext)
+    const { currentAccount, votingSystemContract } = useContext(VoterContext)
     const [candidates, setCandidates] = useState([]);
     const [voters, setVoters] = useState([]);
 
     const [auth, setAuth] = useState(false);
     const [header, setHeader] = useState("");
-
-
-    // const navigate = useNavigate();
-    // useEffect(() => {
-    //     if (!currentAccount || chainId !== '0x5') {
-    //         navigate("/")
-    //     }
-
-    // }, [currentAccount, navigate])
 
 
     useEffect(() => {

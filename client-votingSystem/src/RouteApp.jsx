@@ -3,10 +3,8 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import Admin from "./Admin";
 import App from "./App";
 import SendNft from "./SendNft"
-import Voter from "./Voter";
 import { useContext } from "react";
 import { VoterContext } from "./Context/Context";
 import Home from "./Home";
