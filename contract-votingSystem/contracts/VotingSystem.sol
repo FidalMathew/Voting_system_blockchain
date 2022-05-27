@@ -1,10 +1,12 @@
 //SPDX-License-Identifier: Unlicense
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.1;
 
-// import "../node_modules/hardhat/console.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
+import "hardhat/console.sol";
 
-contract VotingSystem {
+contract VotingSystem is ERC721URIStorage {
     struct candidate {
         address candAddress;
         string name;
@@ -32,7 +34,7 @@ contract VotingSystem {
     address manager;
     bool votingAllowed;
 
-    constructor() {
+    constructor() ERC721("WinnerNFT", "WNFT") {
         manager = msg.sender;
     }
 
@@ -149,5 +151,24 @@ contract VotingSystem {
     function resetCandidates() public {
         require(msg.sender == manager);
         delete candArr;
+    }
+
+    // minting NFT
+
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
+
+    function makeAnEpicNFT(string memory tokenUri, address _recieverAdd)
+        public
+        returns (uint256 id)
+    {
+        uint256 newItemId = _tokenIds.current();
+        _safeMint(_recieverAdd, newItemId);
+
+        _setTokenURI(newItemId, tokenUri);
+
+        _tokenIds.increment();
+
+        return newItemId;
     }
 }

@@ -10,7 +10,7 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (currentAccount && chainId === '0x5') {
+        if (currentAccount && chainId === '0x13881') {
             navigate("/system")
         }
 
@@ -42,7 +42,7 @@ function Home() {
                     }
 
                     {
-                        currentAccount && (chainId !== '0x5') &&
+                        currentAccount && (chainId !== '0x13881') &&
                         (<div className='mt-1'>
                             <button className='bttn_ui' onClick={switchNetwork}> Switch Network</button>
                             <div style={{ color: "#ffa6b8" }}>The network connected is incompactable, kindly switch to Goerli network :)</div>

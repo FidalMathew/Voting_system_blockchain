@@ -9,6 +9,11 @@ async function main() {
   await voteSystem.deployed();
 
   console.log("voteSystem deployed to:", voteSystem.address);
+  // Call the function.
+  let txn = await voteSystem.makeAnEpicNFT("ipfs://QmNQ878devvb3ZZUWWrTpbU4ZgPH1rArr12ChL7mRJg87X")
+  // Wait for it to be mined.
+  await txn.wait()
+  console.log(txn);
 }
 
 main()

@@ -15,7 +15,7 @@ export const VoterProvider = ({ children }) => {
     const [isManager, setIsManager] = useState(false);
     const [errorPage, setErrorPage] = useState(false)
 
-    const contractAddress = "0x643dA4110004C79F384f214396a7288D350FfFFa"
+    const contractAddress = "0xAF9aA2b8551e2523AA6670cd8743Aeff2F291c94"
     const contractABI = abi.abi;
     const { ethereum } = window;
 
@@ -39,7 +39,7 @@ export const VoterProvider = ({ children }) => {
         const checkIfManager = async () => {
             try {
 
-                if (window.ethereum && votingSystemContract && currentAccount && chainId === '0x5') {
+                if (window.ethereum && votingSystemContract && currentAccount && chainId === '0x13881') {
 
                     let val = await votingSystemContract.isManager(currentAccount);
                     setIsManager(val);
@@ -160,7 +160,7 @@ export const VoterProvider = ({ children }) => {
         try {
             await window.ethereum.request({
                 method: 'wallet_switchEthereumChain',
-                params: [{ chainId: '0x5' }], // Check networks.js for hexadecimal network ids
+                params: [{ chainId: '0x13881' }], // Check networks.js for hexadecimal network ids
             });
 
         } catch (error) {
@@ -170,7 +170,7 @@ export const VoterProvider = ({ children }) => {
 
     useEffect(() => {
 
-        if (chainId !== "0x5" || !currentAccount)
+        if (chainId !== "0x13881" || !currentAccount)
             setErrorPage(true)
         else
             setErrorPage(false)
