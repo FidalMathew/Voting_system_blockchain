@@ -18,9 +18,16 @@ function Admin() {
     const [voters, setVoters] = useState([]);
     const [systemStatus, setSystemStatus] = useState(false)
 
-    const changeSystemStatus = () => {
-        setSystemStatus(!systemStatus);
-    }
+    useEffect(() => {
+        const getVotingAllowed = async () => {
+            const vot = await votingSystemContract.isVotingAllowed();
+            setSystemStatus(vot);
+        }
+        getVotingAllowed();
+
+    }, [votingSystemContract])
+
+
 
     const addVoter = async () => {
         await contract.addVoter(V_walletAdd, V_name);
@@ -95,14 +102,14 @@ function Admin() {
         let res = await contract.startVoting();
         // console.log(res);
         res = await res.wait()
-        res && changeSystemStatus();
+        res && setSystemStatus(!systemStatus);
     }
     const endVoting = async () => {
         let res = await contract.endVoting();
         res = await res.wait()
         // console.log(res);
 
-        res && changeSystemStatus();
+        res && setSystemStatus(!systemStatus);
 
         getWinner();
     }

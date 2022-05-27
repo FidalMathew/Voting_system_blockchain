@@ -17,7 +17,7 @@ export const VoterProvider = ({ children }) => {
     const [tokenID, setTokenID] = useState(-1)
     const [winner, setWinner] = useState({ address: "", name: "", proposal: "", votes: 0 })
 
-    const contractAddress = "0xdCc734f78dB07D919812c53C00b9b816fB064b76"
+    const contractAddress = "0x585f59c9143A4E4f94eE34Bba45330b99a27f4Fe"
     const contractABI = abi.abi;
     const { ethereum } = window;
 

@@ -143,6 +143,10 @@ contract VotingSystem is ERC721URIStorage {
         votingAllowed = false;
     }
 
+    function isVotingAllowed() public view returns (bool v_allow) {
+        return votingAllowed;
+    }
+
     function resetVoters() public {
         require(msg.sender == manager);
         delete voterArr;
