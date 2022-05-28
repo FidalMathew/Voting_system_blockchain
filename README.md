@@ -1,7 +1,7 @@
 # Voting-system-blockchain
 
 Decentralized Voting System is a blockchain based Dapp which enables a safe voting process. 
-There are three users who can access the website by connecting their wallet:
+Three type of users can access the website by connecting their wallet:
 
 ### - The Admin (contract deployer)
   - Adds candidates
