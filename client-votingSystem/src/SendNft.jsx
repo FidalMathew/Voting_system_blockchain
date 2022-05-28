@@ -8,7 +8,7 @@ import WinnerTemp from './components/WinnerTemp';
 
 function SendNft() {
 
-    const [fileImg, setFileImg] = useState("");
+    const [fileImg, setFileImg] = useState(null);
     const [name, setName] = useState("")
     const [desc, setDesc] = useState("")
 
@@ -58,6 +58,7 @@ function SendNft() {
             alert("Winner candidate does not exist, Kindly 'Get Winner' at Admin panel");
             return;
         }
+
         if (fileImg) {
             try {
 
