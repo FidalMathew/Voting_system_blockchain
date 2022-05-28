@@ -1,6 +1,7 @@
 # Voting-system-blockchain
 
-Decentralized Voting System is a blockchain based Dapp which enables 2 users access to write data on blockchain .
+Decentralized Voting System is a blockchain based Dapp which enables a safe voting process. 
+There are three users who can access the website by connecting their wallet:
 
 ### - The Admin (contract deployer)
   - Adds candidates
@@ -8,7 +9,7 @@ Decentralized Voting System is a blockchain based Dapp which enables 2 users acc
   - Starts Voting 
   - Ends Voting
   - Reset All the data
-
+  - Sends NFT to the winner (using IPFS API)
 
 ### - The Voter 
   - View candidate information and choose to vote
@@ -16,21 +17,15 @@ Decentralized Voting System is a blockchain based Dapp which enables 2 users acc
 ### - Not Voter
   - Can only view candidate information 
 
-## Home page
-![image](https://user-images.githubusercontent.com/84982038/169947707-a7945100-43d5-4be8-91df-6bd795f1aa4d.png)
+### Video Explaination of Entire Project
 
-![image](https://user-images.githubusercontent.com/84982038/169947810-ab844e76-58ba-4bcf-a04c-31478ad74324.png)
+https://user-images.githubusercontent.com/84982038/170817612-6e0e38ee-92a8-44a8-b92d-d1a2bef0cef5.mp4
 
-### Admin page
-![image](https://user-images.githubusercontent.com/84982038/169947851-65acbeaf-ea7a-4b66-9dc2-7f1372ecc8f4.png)
-![image](https://user-images.githubusercontent.com/84982038/170196993-733e5f7e-1694-4c90-8069-7375f418b826.png)
-![image](https://user-images.githubusercontent.com/84982038/170197005-abf74b56-454b-482a-a92c-09d0caf70211.png)
 
-### Voter page
+## Some Minted NFTs 
 
-![image](https://user-images.githubusercontent.com/84982038/170197071-93c8a2b1-d183-4159-8510-b4a51ad142ff.png)
-![image](https://user-images.githubusercontent.com/84982038/170197342-bd79c076-6861-484e-9883-bee5420cdea7.png)
-
+- [#0](https://testnets.opensea.io/assets/mumbai/0x585f59c9143A4E4f94eE34Bba45330b99a27f4Fe/0)
+- [#1](https://testnets.opensea.io/assets/mumbai/0x585f59c9143A4E4f94eE34Bba45330b99a27f4Fe/1)
 
 
 ## Secret Variables
@@ -42,5 +37,7 @@ Decentralized Voting System is a blockchain based Dapp which enables 2 users acc
 
 ### Frontend
 
-1. Smart Contract address (after deploying to blockchain)
-2. ABI (smart contract artifacts json) 
+1. Smart Contract address (after deploying to blockchain)  //available
+2. ABI (smart contract artifacts json)   //available
+3. Pinata API key
+4. Pinata Secret Key
