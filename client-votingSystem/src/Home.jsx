@@ -45,7 +45,7 @@ function Home() {
                         currentAccount && (chainId !== '0x13881') &&
                         (<div className='mt-1'>
                             <button className='bttn_ui' onClick={switchNetwork}> Switch Network</button>
-                            <div style={{ color: "#ffa6b8" }}>The network connected is incompactable, kindly switch to Goerli network :)</div>
+                            <div style={{ color: "#ffa6b8" }}>The network connected is incompactable, kindly switch to Mumbai(Polygon testnet) network :)</div>
 
                         </div>)
                     }
